@@ -2,11 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux'
 
-import './index.css';
-import 'App.css';
 import "bootstrap/dist/css/bootstrap.min.css";
 import "shards-ui/dist/css/shards.min.css"
-import "styles/overwrites.css"
+import "styles/index.scss";
 
 import Routes from 'routes';
 import store from 'store';

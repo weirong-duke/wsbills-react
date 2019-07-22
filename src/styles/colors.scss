@@ -1,0 +1,11 @@
+:root {
+  --color-primary: #162814;
+  --color-primary-light: lighten(var(--color-primary));
+  --color-primary-dark: darken(var(--color-primary));
+  --color-secondary: #5E8759;
+  --color-secondary-light: lighten(var(--color-secondary));
+  --color-secondary-dark: darken(var(--color-secondary));
+  --color-tertiary: #B3EFAC;
+  --color-tertiary-light: lighten(var(--color-tertiary));
+  --color-tertiary-dark: darken(var(--color-tertiary))
+}

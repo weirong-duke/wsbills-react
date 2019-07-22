@@ -1,4 +1,4 @@
-export default interface PoolsModel{
+export default interface PoolModel{
   name: string;
   description: string;
   identifier: string;

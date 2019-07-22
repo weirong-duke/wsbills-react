@@ -1,0 +1,14 @@
+.Main {
+  .create-pool {
+      color: var(--color-primary);
+  }
+  .pool-list {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+    transition: all .5s ease-out;
+    &.open {
+      -webkit-transform: translateX(0);
+      transform: translateX(0);
+    }
+  }
+}

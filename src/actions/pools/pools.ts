@@ -1,12 +1,15 @@
 import axios from 'axios';
-import {PoolsModel } from 'types/models';
+import {PoolSchema, PoolSchemaName} from 'utils/normalizrModels';
+import {PoolModel} from 'types/state';
 import {Dispatch} from "redux";
+import {setStateModels} from 'utils/models';
 
-export const getPoolList = (params?) => async (dispatch: Dispatch) => {
+
+export const getPoolList = (params?: Partial<PoolModel>) => async (dispatch: Dispatch) => {
   try{
-  const response = await axios.get('/pools')
-  return response;
-
+    const response = await axios.get('/pools');
+    setStateModels(response.data, [PoolSchema], PoolSchemaName, dispatch)
+    return response;
   }
   catch(e) {
     console.log('error', e)
