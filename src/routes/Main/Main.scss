@@ -1,14 +1,37 @@
 .Main {
+  .nav {
+    background-color: #162814;
+    height: 65px;
+    a {
+      color: white;
+      font-size: 24px;
+      font-weight: 600;
+
+    }
+    &-link {
+      padding: 1rem;
+    }
+  }
   .create-pool {
       color: var(--color-primary);
   }
-  .pool-list {
-    -webkit-transform: translateX(-100%);
-    transform: translateX(-100%);
-    transition: all .5s ease-out;
-    &.open {
-      -webkit-transform: translateX(0);
-      transform: translateX(0);
+
+  .list-group {
+    a {
+      color: var(--color-primary);
+    }
+    &-item {
+      &.selected {
+        background-color: var(--color-primary);
+        color: var(--color-tertiary-light);
+        transition: background-color .5s ease;
+
+      }
     }
   }
+  .main-container {
+    height: calc(100vh - 80px);
+    display: inline-flex;
+  }
+
 }

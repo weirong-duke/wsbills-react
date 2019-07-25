@@ -1,11 +1,44 @@
 :root {
   --color-primary: #162814;
-  --color-primary-light: lighten(var(--color-primary));
-  --color-primary-dark: darken(var(--color-primary));
+  --color-primary-light: #7F897E;
+  --color-primary-dark: #0C160B;
   --color-secondary: #5E8759;
-  --color-secondary-light: lighten(var(--color-secondary));
-  --color-secondary-dark: darken(var(--color-secondary));
+  --color-secondary-light: #7F897E;
+  --color-secondary-dark: #7F897E;
   --color-tertiary: #B3EFAC;
-  --color-tertiary-light: lighten(var(--color-tertiary));
-  --color-tertiary-dark: darken(var(--color-tertiary))
+  --color-tertiary-light: #CEF4CA;
+  --color-tertiary-dark: #83AE7E;
+  --color-gray: #E9EBE9;
+}
+
+.color-primary {
+  color: var(--color-primary) !important;
+}
+
+.color-secondary {
+  color: var(--color-secondary) !important;
+}
+
+.color-tertiary {
+  color: var(--color-tertiary) !important;
+}
+
+.bg-color-primary {
+  background-color: var(--color-primary) !important;
+}
+
+.bg-color-secondary {
+  background-color: var(--color-secondary) !important;
+}
+
+.bg-color-tertiary {
+  background-color: var(--color-tertiary) !important;
+}
+
+.bg-color-tertiary--dark {
+  background-color: var(--color-tertiary-dark) !important;
+}
+
+.bg-color-tertiary--light {
+  background-color: var(--color-tertiary-light) !important;
 }

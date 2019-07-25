@@ -1,14 +1,21 @@
+import {ModelPayload} from 'types/actions';
+import {DefaultState} from 'types/state';
+
 const DEFAULT_STATE = {
   entities: {},
   result: []
-}
+};
 
-const reducerCreator = (model: string) => (state = DEFAULT_STATE, action) => {
+const reducerCreator = (model: string) => (state: DefaultState = DEFAULT_STATE, action: {type: string, payload: ModelPayload}) => {
   switch (action.type) {
     case `SET_${model}`:
+      const newResult = action.payload.result || state.result;
       return {
-        ...state,
-        ...action.payload
+        entities: {
+          ...state.entities,
+          ...action.payload.entities
+        },
+        result: newResult
       };
   }
   return state;

@@ -4,7 +4,9 @@ import Main from "routes/Main";
 
 const Routes: FC = () => {
   return <Router>
-    <Route path="/" component={Main} />
+    <Route path="/pools/:poolId?" component={Main} />
+    {/*<Route path="/" component={Main} />*/}
+
   </Router>
 };
 

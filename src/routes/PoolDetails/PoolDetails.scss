@@ -1,0 +1,19 @@
+.PoolDetails {
+  flex-grow:4;
+  height: calc(100vh - 65px);
+  margin-left: 1.25rem;
+  padding-top: 1.25rem;
+  display: inline-flex;
+  width: 100%;
+  &.open {
+    width: calc(100vw - 400px - 1.25rem);
+  }
+
+  .details {
+    display: block;
+  }
+  .participants {
+    margin-top: 1em;
+    width: 100%;
+  }
+}

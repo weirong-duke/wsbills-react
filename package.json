@@ -16,9 +16,11 @@
     "react-router": "^5.0.1",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
+    "react-spring": "^8.0.27",
     "redux": "^4.0.4",
     "redux-promise": "^0.6.0",
     "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
     "shards-react": "^1.0.3",
     "typescript": "3.5.3"
   },

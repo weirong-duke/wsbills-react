@@ -15,3 +15,14 @@ export const getPoolList = (params?: Partial<PoolModel>) => async (dispatch: Dis
     console.log('error', e)
   }
 };
+
+export const getPoolDetails = (id: string) => async (dispatch: Dispatch) => {
+  try {
+    const response = await axios.get(`/pools/${id}`);
+    setStateModels(response.data, PoolSchema, PoolSchemaName, dispatch);
+    return response;
+  }
+  catch(e) {
+    console.log('error', e)
+  }
+};

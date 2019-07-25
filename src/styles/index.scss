@@ -14,3 +14,7 @@ code {
 
 @import "./colors.scss";
 @import "./overwrites.scss";
+
+.border-none {
+  border: none !important;
+}

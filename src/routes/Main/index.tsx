@@ -1,24 +1,29 @@
 import React, {ChangeEvent, FC, useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {Container, Col, Row, ListGroup, ListGroupItem, Nav, NavItem, NavLink } from "shards-react";
+import {Link, Route} from 'react-router-dom';
+import {ListGroup, ListGroupItem, Nav, NavItem, NavLink } from "shards-react";
 
 import {getPoolList} from 'actions/pools/pools'
+
+import PoolSlider from 'components/PoolSlider';
+import PoolDetails from 'routes/PoolDetails';
 import {selectPoolsEntities, selectPoolsResult} from 'selectors/state';
 
 import DispatchProp from 'types/dispatch';
-
 import ReduxState, {PoolModel} from 'types/state';
 
 import './Main.scss';
+import {selectParamsPoolId} from "../../selectors/props";
 
 interface ConnectProps{
+  poolId: string;
   pools: PoolModel[];
 }
 
 type MainProps = ConnectProps & DispatchProp;
 
-const Main: FC<MainProps>= ({dispatch, pools}) => {
-  const [poolListOpen, setPoolListOpen] = useState<boolean>(true);
+const Main: FC<MainProps>= ({dispatch, poolId, pools}) => {
+  const [isPoolListOpen, setIsPoolListOpen] = useState<boolean>(true);
   const onMount = () => {
     dispatch(getPoolList());
   };
@@ -27,10 +32,9 @@ const Main: FC<MainProps>= ({dispatch, pools}) => {
 
   const handleToggleList = (e: ChangeEvent<HTMLInputElement>) => {
     e && e.preventDefault();
-    setPoolListOpen(!poolListOpen);
+    setIsPoolListOpen(!isPoolListOpen);
   };
-
-  console.log('what ', poolListOpen)
+  console.log('rendering, poolId,', poolId)
 
   return <div className="Main">
     <Nav>
@@ -40,28 +44,28 @@ const Main: FC<MainProps>= ({dispatch, pools}) => {
         </NavLink>
       </NavItem>
     </Nav>
-      <Row>
-        <Col sm="12" md="4" lg="3">
-          <ListGroup className={`pool-list ${poolListOpen ? 'open' : ''}`}>
-            <ListGroupItem onClick={handleToggleList}>Close</ListGroupItem>
-            <ListGroupItem className="create-pool">Create a new pool</ListGroupItem>
-            {pools.map((pool: PoolModel) => <ListGroupItem>{pool.name}</ListGroupItem>)}
-          </ListGroup>
-        </Col>
-        <Col sm="12" md="8" lg="10">
-        </Col>
-      </Row>
+    <div className="main-container">
+      <PoolSlider closeDelay={400} openDelay={50} isOpen={isPoolListOpen}>
+        <ListGroup>
+          <ListGroupItem onClick={handleToggleList}>Close</ListGroupItem>
+          <ListGroupItem className="create-pool">Create a new pool</ListGroupItem>
+          {pools.map((pool: PoolModel) => <Link key={pool.identifier} to={`/pools/${pool.identifier}`}><ListGroupItem className={pool.identifier === poolId ? 'selected' : ''}>{pool.name}</ListGroupItem></Link>)}
+        </ListGroup>
+      </PoolSlider>
+      <PoolDetails isPoolListOpen={isPoolListOpen}/>
+    </div>
+
 
   </div>
 };
 
 export default connect((state: ReduxState, props) => {
-  console.log('hmmm', state)
   const poolsResults = selectPoolsResult(state);
   const poolsEntities = selectPoolsEntities(state);
   const pools = poolsResults.map(id => poolsEntities[id]);
-  console.log('ppols', pools)
+  const poolId = selectParamsPoolId(state, props);
   return {
+    poolId,
     pools
   }
 })(Main);
