@@ -34,7 +34,6 @@ const Main: FC<MainProps>= ({dispatch, poolId, pools}) => {
     e && e.preventDefault();
     setIsPoolListOpen(!isPoolListOpen);
   };
-  console.log('rendering, poolId,', poolId)
 
   return <div className="Main">
     <Nav>

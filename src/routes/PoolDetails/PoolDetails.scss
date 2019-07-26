@@ -1,8 +1,7 @@
 .PoolDetails {
   flex-grow:4;
   height: calc(100vh - 65px);
-  margin-left: 1.25rem;
-  padding-top: 1.25rem;
+  padding: 1.25rem;
   display: inline-flex;
   width: 100%;
   &.open {
@@ -15,5 +14,25 @@
   .participants {
     margin-top: 1em;
     width: 100%;
+    button {
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+  }
+
+  .transaction-details {
+    display: inline-flex;
+    flex-direction: row;
+    .transactions {
+      max-width: 25%;
+      min-width: 25%;
+      margin-top: 1.25rem;
+    }
+    .graph {
+      width: 100%;
+      flex-direction: row;
+      display: inline-flex;
+      justify-content: center;
+    }
   }
 }

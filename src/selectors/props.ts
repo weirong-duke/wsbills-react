@@ -9,3 +9,10 @@ export const selectParamsPoolId = createSelector(
     return params.poolId
   }
 );
+
+export const selectParamsTransactionId = createSelector(
+  selectParams,
+  (params) => {
+    return params.transactionId
+  }
+);
