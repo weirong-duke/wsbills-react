@@ -149,14 +149,7 @@ const PoolDetails: FC<PoolDetailsProps> = ({dispatch, isPoolListOpen, pool, pool
       console.log('poolUsersToColors', poolUsersToColors, sortedPoolUsers)
       return {
         labels: sortedPoolUsers.map(getPoolUserDisplayName),
-        datasets: [{
-          data: sortedPoolUsers.map(poolUser => {
-            const userTransactions = sortedTransactions.filter(transaction => transaction.pool_user === poolUser.id);
-            return userTransactions.reduce((total, transaction) => total + transaction.amount, 0);
-          }),
-          backgroundColor: sortedPoolUsers.map(poolUser => poolUsersToColors[poolUser.id]),
-          label: 'Total Amount'
-        },
+        datasets: [
           {
             data: sortedPoolUsers.reduce((transactions, poolUser) => {
               const userTransactions = sortedTransactions.filter(transaction => transaction.pool_user === poolUser.id);
@@ -167,7 +160,20 @@ const PoolDetails: FC<PoolDetailsProps> = ({dispatch, isPoolListOpen, pool, pool
               const userColor = poolUsersToColors[poolUser.id];
               return [...colors, ...userTransactions.map(transaction => userColor)];
             }, []),
-            label: 'Itemized'
+            label: sortedPoolUsers.reduce((labels, poolUser) => {
+              const userTransactions = sortedTransactions.filter(transaction => transaction.pool_user === poolUser.id);
+              return [...labels, ...userTransactions.map(transaction => `${getPoolUserDisplayName(poolUser)} - ${transaction.title}`)];
+            }, [])
+          },
+          {
+            data: sortedPoolUsers.map(poolUser => {
+              const userTransactions = sortedTransactions.filter(transaction => transaction.pool_user === poolUser.id);
+              return userTransactions.reduce((total, transaction) => total + transaction.amount, 0);
+            }),
+            backgroundColor: sortedPoolUsers.map(poolUser => poolUsersToColors[poolUser.id]),
+            label: sortedPoolUsers.map(poolUser => {
+              return `${getPoolUserDisplayName(poolUser)} - Total Amount`
+            })
           }
         ]
       }
@@ -216,7 +222,7 @@ const PoolDetails: FC<PoolDetailsProps> = ({dispatch, isPoolListOpen, pool, pool
                 animateRotate: true
               },
               legend: {
-                display: false,
+                onClick: () => {}
               },
               maintainAspectRatio: true,
               responsive: true,
@@ -224,7 +230,7 @@ const PoolDetails: FC<PoolDetailsProps> = ({dispatch, isPoolListOpen, pool, pool
                 callbacks: {
                   label: function(item, data) {
                     console.log(data.labels, item);
-                    return `${data.labels[item.index]} - ${data.datasets[item.datasetIndex].label} : ${data.datasets[item.datasetIndex].data[item.index]}`;
+                    return `${data.datasets[item.datasetIndex].label[item.index]} : $${data.datasets[item.datasetIndex].data[item.index]}`;
                   }
                 }
               }
