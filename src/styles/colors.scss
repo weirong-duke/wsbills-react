@@ -8,7 +8,13 @@
   --color-tertiary: #B3EFAC;
   --color-tertiary-light: #CEF4CA;
   --color-tertiary-dark: #83AE7E;
+  --color-danger: #FFB3BA;
+  --color-warning: #FFDFBA;
+  --color-confirm: #BAE1FF;
   --color-gray: #E9EBE9;
+  --color-notes: #FEFF9C;
+  --color-notes-vertical-line: #FF7EB9;
+  --color-notes-horizontal-line: #AFEEEE
 }
 
 .color-primary {
@@ -21,6 +27,18 @@
 
 .color-tertiary {
   color: var(--color-tertiary) !important;
+}
+
+.color-danger {
+  color: var(--color-danger) !important;
+}
+
+.color-notes-vertical-line {
+  color: var(--color-notes-vertical-line) !important;
+}
+
+.color-notes-horizontal-line {
+  color: var(--color-notes-horizontal-line) !important;
 }
 
 .bg-color-primary {
@@ -41,4 +59,8 @@
 
 .bg-color-tertiary--light {
   background-color: var(--color-tertiary-light) !important;
+}
+
+.bg-color-notes {
+  background-color: var(--color-notes) !important;
 }

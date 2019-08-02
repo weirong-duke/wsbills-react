@@ -1,6 +1,7 @@
 import React, {ChangeEvent, FC, useEffect, useState} from 'react';
 import {connect} from 'react-redux';
-import {Link, Route} from 'react-router-dom';
+import {Link} from 'react-router-dom';
+import {FaPlusCircle} from 'react-icons/fa'
 import {ListGroup, ListGroupItem, Nav, NavItem, NavLink } from "shards-react";
 
 import {getPoolList} from 'actions/pools/pools'
@@ -44,14 +45,14 @@ const Main: FC<MainProps>= ({dispatch, poolId, pools}) => {
       </NavItem>
     </Nav>
     <div className="main-container">
-      <PoolSlider closeDelay={400} openDelay={50} isOpen={isPoolListOpen}>
+      <PoolSlider isOpen={isPoolListOpen}>
         <ListGroup>
-          <ListGroupItem onClick={handleToggleList}>Close</ListGroupItem>
-          <ListGroupItem className="create-pool">Create a new pool</ListGroupItem>
+          <ListGroupItem className="cursor-pointer"onClick={handleToggleList}>Close</ListGroupItem>
+          <ListGroupItem className="create-pool cursor-pointer">Create a new pool <FaPlusCircle /></ListGroupItem>
           {pools.map((pool: PoolModel) => <Link key={pool.identifier} to={`/pools/${pool.identifier}`}><ListGroupItem className={pool.identifier === poolId ? 'selected' : ''}>{pool.name}</ListGroupItem></Link>)}
         </ListGroup>
       </PoolSlider>
-      <PoolDetails isPoolListOpen={isPoolListOpen}/>
+      <PoolDetails />
     </div>
 
 
