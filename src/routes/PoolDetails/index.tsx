@@ -35,10 +35,10 @@ interface ConnectProps {
 type PoolDetailsProps = ConnectProps & DispatchProp & RouteComponentProps;
 
 export const getPoolUserDisplayName = (poolUser: PoolUsersDetails) => {
-  console.log('uh', poolUser)
   if (!poolUser) return '';
   return poolUser.user ? poolUser.user.first_name ? `${poolUser.user.first_name} ${poolUser.user.last_name}` : poolUser.user.email : poolUser.unverified_email
 };
+
 
 const PoolDetails: FC<PoolDetailsProps> = ({dispatch, pool, poolId, poolUsers, transactions}) => {
   const [poolUsersToColors, setPoolUsersToColors] = useState<{[key: string]: string} | null>(null);
@@ -67,6 +67,11 @@ const PoolDetails: FC<PoolDetailsProps> = ({dispatch, pool, poolId, poolUsers, t
     }
   }, [poolId]);
 
+  const getSpendingForPoolUser = (poolUser: PoolUsersDetails) => {
+    const userTransactions = sortedTransactions.filter(transaction => transaction.pool_user === poolUser.id);
+    return userTransactions.reduce((total, transaction) => total + transaction.amount, 0);
+  };
+
   const generateChartData = useMemo(() => {
     if (poolUsersToColors) {
       return {
@@ -88,10 +93,7 @@ const PoolDetails: FC<PoolDetailsProps> = ({dispatch, pool, poolId, poolUsers, t
             }, [])
           },
           {
-            data: sortedPoolUsers.map(poolUser => {
-              const userTransactions = sortedTransactions.filter(transaction => transaction.pool_user === poolUser.id);
-              return userTransactions.reduce((total, transaction) => total + transaction.amount, 0);
-            }),
+            data: sortedPoolUsers.map(getSpendingForPoolUser),
             backgroundColor: sortedPoolUsers.map(poolUser => poolUsersToColors[poolUser.id]),
             label: sortedPoolUsers.map(poolUser => {
               return `${getPoolUserDisplayName(poolUser)} - Total Amount`
@@ -106,18 +108,23 @@ const PoolDetails: FC<PoolDetailsProps> = ({dispatch, pool, poolId, poolUsers, t
     setShowParticipants(!showParticipants)
   };
 
+  const renderPoolUserPricing = (poolUser: PoolUsersDetails) => {
+    console.log('hmm', costPerUser);
+    const spending = getSpendingForPoolUser(poolUser)
+    return <p key={poolUser.id}>
+      {getPoolUserDisplayName(poolUser)}
+      {spending > costPerUser ?
+        <>{` is owed $`}<span className="color-secondary font-weight-bold">{spending - costPerUser}</span></> :
+        spending < costPerUser ?
+          <>{` owes $`}<span className="color-danger font-weight-bold">{costPerUser - spending}</span></> :
+          'is Gucci'}
+    </p>
+  };
+
   const toggleAddTransactionModal = (e?) => {
     e && e.preventDefault();
     setShowAddTransactionModal(!showAddTransactionModal);
   };
-  if (poolUsersToColors) {
-
-    console.log('ack', poolUsersToColors, Object.keys(poolUsersToColors))
-    for (const poolUserId of Object.keys(poolUsersToColors)) {
-      console.log('id, ', poolUserId, poolUsersToColors[poolUserId])
-      console.log('hmmm', poolUsers, poolUsers[poolUserId])
-    }
-  }
 
   const totalTransactionCost = transactions.reduce((total, transaction) => {
     return total += transaction.amount;
@@ -183,10 +190,7 @@ const PoolDetails: FC<PoolDetailsProps> = ({dispatch, pool, poolId, poolUsers, t
           }, 0)}</p>
           <p>Cost Per Person: <span className="color-danger">${costPerUser}</span></p>
           <h4>Remaining Payments</h4>
-          {
-            sortedPoolUsers.map
-          }
-
+          {sortedPoolUsers.map(renderPoolUserPricing)}
         </div>
         <AddTransactionModal dispatch={dispatch} pool={pool.id} poolUsers={poolUsers} open={showAddTransactionModal} toggle={toggleAddTransactionModal}/>
       </div>

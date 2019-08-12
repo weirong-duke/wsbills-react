@@ -32,7 +32,6 @@ const Main: FC<MainProps>= ({dispatch, poolId, pools}) => {
   useEffect(onMount, []);
 
   const handleToggleList = (e: ChangeEvent<HTMLInputElement>) => {
-    e && e.preventDefault();
     setIsPoolListOpen(!isPoolListOpen);
   };
 
@@ -47,9 +46,9 @@ const Main: FC<MainProps>= ({dispatch, poolId, pools}) => {
     <div className="main-container">
       <PoolSlider isOpen={isPoolListOpen}>
         <ListGroup>
-          <ListGroupItem className="cursor-pointer"onClick={handleToggleList}>Close</ListGroupItem>
+          <ListGroupItem className="cursor-pointer" onClick={handleToggleList}>Close</ListGroupItem>
           <ListGroupItem className="create-pool cursor-pointer">Create a new pool <FaPlusCircle /></ListGroupItem>
-          {pools.map((pool: PoolModel) => <Link key={pool.identifier} to={`/pools/${pool.identifier}`}><ListGroupItem className={pool.identifier === poolId ? 'selected' : ''}>{pool.name}</ListGroupItem></Link>)}
+          {pools.map((pool: PoolModel) => <Link onClick={handleToggleList} key={pool.identifier} to={`/pools/${pool.identifier}`}><ListGroupItem className={pool.identifier === poolId ? 'selected' : ''}>{pool.name}</ListGroupItem></Link>)}
         </ListGroup>
       </PoolSlider>
       <PoolDetails />

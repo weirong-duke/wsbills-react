@@ -7,7 +7,7 @@ import {PoolSchema, PoolSchemaName} from 'utils/normalizrModels';
 
 export const getPoolList = (params?: Partial<PoolModel>) => async (dispatch: Dispatch) => {
   try{
-    const response = await axios.get(`/pools${stringify(params)}`);
+    const response = await axios.get(`/pools${stringify(params)}`, {headers: {'Authorization': `Token 5ebc185993bbd6d20fd9fa225edd98a0331e9a85`}});
     setStateModels(response.data, [PoolSchema], PoolSchemaName, dispatch);
     return response;
   }
@@ -18,7 +18,7 @@ export const getPoolList = (params?: Partial<PoolModel>) => async (dispatch: Dis
 
 export const getPoolDetails = (id: string) => async (dispatch: Dispatch) => {
   try {
-    const response = await axios.get(`/pools/${id}`);
+    const response = await axios.get(`/pools/${id}`, {headers: {'Authorization': `Token 5ebc185993bbd6d20fd9fa225edd98a0331e9a85`}});
     setStateModels(response.data, PoolSchema, PoolSchemaName, dispatch);
     return response;
   }

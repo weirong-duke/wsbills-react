@@ -19,7 +19,7 @@ interface TransactionCreateData {
 
 export const getTransactionList = (params?: TransactionQueryParams) => async (dispatch: Dispatch) => {
   try{
-    const response = await axios.get(`/transactions${stringify(params)}`);
+    const response = await axios.get(`/transactions${stringify(params)}`, {headers: {'Authorization': `Token 5ebc185993bbd6d20fd9fa225edd98a0331e9a85`}});
     setStateModels(response.data, [TransactionSchema], TransactionSchemaName, dispatch)
     return response;
   }
